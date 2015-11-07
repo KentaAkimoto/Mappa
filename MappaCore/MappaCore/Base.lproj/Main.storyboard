@@ -26,11 +26,18 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DH2-50-8fo">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DH2-50-8fo">
                                 <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
                                 <state key="normal" title="ふ〜"/>
                                 <connections>
                                     <action selector="tapButton:" destination="BV1-FR-VrT" eventType="touchUpInside" id="IfI-Iw-GYP"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bah-ap-sbO">
+                                <rect key="frame" x="0.0" y="50" width="30" height="30"/>
+                                <state key="normal" title="げー"/>
+                                <connections>
+                                    <action selector="tapGet:" destination="BV1-FR-VrT" eventType="touchUpInside" id="kHX-rV-tiA"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -43,6 +50,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="RfT-ZE-bA7" secondAttribute="trailing" constant="-20" id="gnM-0B-wuX"/>
                             <constraint firstItem="MsF-2V-B78" firstAttribute="top" secondItem="rPD-nZ-3zu" secondAttribute="topMargin" id="jbu-Iy-1Kb"/>
                             <constraint firstItem="RfT-ZE-bA7" firstAttribute="top" secondItem="rPD-nZ-3zu" secondAttribute="topMargin" id="njh-xh-Kbp"/>
+                            <constraint firstItem="Bah-ap-sbO" firstAttribute="top" secondItem="DH2-50-8fo" secondAttribute="bottom" constant="20" id="qUW-Ym-Nzw"/>
                             <constraint firstAttribute="bottomMargin" secondItem="MsF-2V-B78" secondAttribute="bottom" id="yug-IB-CEu"/>
                         </constraints>
                     </view>
@@ -53,7 +61,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="242" y="308"/>
+            <point key="canvasLocation" x="224" y="313"/>
         </scene>
     </scenes>
 </document>

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		814F7D241BEDF16B00BB3B61 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 814F7D231BEDF16B00BB3B61 /* CloudKit.framework */; };
+		814F7D261BEDF50100BB3B61 /* CloudKitStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7D251BEDF50100BB3B61 /* CloudKitStorageManager.swift */; };
+		814F7D281BEE4E5C00BB3B61 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814F7D271BEE4E5C00BB3B61 /* Comment.swift */; };
 		815135751BE728B5008ED120 /* AVPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815135741BE728B5008ED120 /* AVPlayerView.swift */; };
 		8151357B1BE72D78008ED120 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8151357A1BE72D78008ED120 /* CameraViewController.swift */; };
 		8151357D1BE72DD3008ED120 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8151357C1BE72DD3008ED120 /* QuartzCore.framework */; };
@@ -41,6 +44,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		814F7D221BEDF12900BB3B61 /* MappaCore.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = MappaCore.entitlements; sourceTree = "<group>"; };
+		814F7D231BEDF16B00BB3B61 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		814F7D251BEDF50100BB3B61 /* CloudKitStorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitStorageManager.swift; sourceTree = "<group>"; };
+		814F7D271BEE4E5C00BB3B61 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		815135741BE728B5008ED120 /* AVPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVPlayerView.swift; sourceTree = "<group>"; };
 		8151357A1BE72D78008ED120 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		8151357C1BE72DD3008ED120 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -69,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				814F7D241BEDF16B00BB3B61 /* CloudKit.framework in Frameworks */,
 				8151357F1BE72DD9008ED120 /* AVFoundation.framework in Frameworks */,
 				8151357D1BE72DD3008ED120 /* QuartzCore.framework in Frameworks */,
 			);
@@ -94,6 +102,7 @@
 		815AF6BE1BE5E10C002C38CB = {
 			isa = PBXGroup;
 			children = (
+				814F7D231BEDF16B00BB3B61 /* CloudKit.framework */,
 				8151357E1BE72DD9008ED120 /* AVFoundation.framework */,
 				8151357C1BE72DD3008ED120 /* QuartzCore.framework */,
 				815AF6C91BE5E10C002C38CB /* MappaCore */,
@@ -116,6 +125,8 @@
 		815AF6C91BE5E10C002C38CB /* MappaCore */ = {
 			isa = PBXGroup;
 			children = (
+				814F7D221BEDF12900BB3B61 /* MappaCore.entitlements */,
+				814F7D251BEDF50100BB3B61 /* CloudKitStorageManager.swift */,
 				815A80961BEA71380013DB17 /* MicrophoneVolumeLevelMeter.swift */,
 				81542EEE1BE8B09800A8351B /* MicrophoneController.swift */,
 				815135741BE728B5008ED120 /* AVPlayerView.swift */,
@@ -128,6 +139,7 @@
 				815AF6D51BE5E10C002C38CB /* LaunchScreen.storyboard */,
 				815AF6D81BE5E10C002C38CB /* Info.plist */,
 				815135801BE7EA12008ED120 /* MappaCore-Bridging-Header.h */,
+				814F7D271BEE4E5C00BB3B61 /* Comment.swift */,
 			);
 			path = MappaCore;
 			sourceTree = "<group>";
@@ -218,6 +230,12 @@
 				TargetAttributes = {
 					815AF6C61BE5E10C002C38CB = {
 						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = 3TBTAEN9E2;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					815AF6DC1BE5E10C002C38CB = {
 						CreatedOnToolsVersion = 7.1;
@@ -283,7 +301,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				815135751BE728B5008ED120 /* AVPlayerView.swift in Sources */,
+				814F7D261BEDF50100BB3B61 /* CloudKitStorageManager.swift in Sources */,
 				8151357B1BE72D78008ED120 /* CameraViewController.swift in Sources */,
+				814F7D281BEE4E5C00BB3B61 /* Comment.swift in Sources */,
 				815AF6CF1BE5E10C002C38CB /* GameViewController.swift in Sources */,
 				81542EEF1BE8B09800A8351B /* MicrophoneController.swift in Sources */,
 				815A80971BEA71380013DB17 /* MicrophoneVolumeLevelMeter.swift in Sources */,
@@ -359,7 +379,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kenta Akimoto (MCNVYV3CD6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kenta Akimoto (MCNVYV3CD6)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -403,7 +424,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kenta Akimoto (MCNVYV3CD6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kenta Akimoto (MCNVYV3CD6)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -428,10 +450,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = MappaCore/MappaCore.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kenta Akimoto (MCNVYV3CD6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kenta Akimoto (MCNVYV3CD6)";
 				INFOPLIST_FILE = MappaCore/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = jp.KentaAkimoto.MappaCore;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.KentaAkimoto.Mappa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MappaCore/MappaCore-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -442,10 +468,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = MappaCore/MappaCore.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Kenta Akimoto (MCNVYV3CD6)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Kenta Akimoto (MCNVYV3CD6)";
 				INFOPLIST_FILE = MappaCore/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = jp.KentaAkimoto.MappaCore;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.KentaAkimoto.Mappa;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MappaCore/MappaCore-Bridging-Header.h";
 			};
 			name = Release;

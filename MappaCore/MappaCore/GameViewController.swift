@@ -523,17 +523,42 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func tapButton(sender: AnyObject) {
-//        self.playThru = RemoteIOPlayThru()
-//        self.playThru!.play()
-
-//        self.microphoneController = MicrophoneController()
-//        do {
-//            try self.microphoneController!.start()
-//        } catch {
-//            
-//        }
+//        self.microphoneVolumeLevelMeter = MicrophoneVolumeLevelMeter()
+//        self.microphoneVolumeLevelMeter!.start()
         
-        self.microphoneVolumeLevelMeter = MicrophoneVolumeLevelMeter()
-        self.microphoneVolumeLevelMeter!.start()
+        let storageManager:CloudKitStorageManager = CloudKitStorageManager()
+        storageManager.saveRecord()
+        
+    }
+    
+    @IBAction func tapGet(sender: AnyObject) {
+        let storageManager:CloudKitStorageManager = CloudKitStorageManager()
+        let fetchComments:[Comment] = storageManager.fetchRecord(NSDate())
+        
+        
+        for comment:Comment in fetchComments {
+            
+            // 箱
+            let numBox = 300
+            let camDistance:CGFloat = 55.0
+            // Add box nodes to the scene
+            for _ in 0..<numBox {
+                let node = SCNNode()
+                let rdx:CGFloat = (randomCGFloat() * camDistance - camDistance / 2)
+                let rdy:CGFloat = randomCGFloat() * 300
+                let rdz:CGFloat = randomCGFloat() * camDistance - camDistance / 2
+                node.position = SCNVector3Make(Float(rdx), Float(rdy), Float(rdz))
+                let box = SCNBox(width: randomCGFloat() * 5.0, height: randomCGFloat() * 5.0, length: randomCGFloat() * 5.0, chamferRadius: 0.0)
+                node.geometry = box
+                node.geometry?.firstMaterial?.diffuse.contents = self.imageWithString(comment.comment)
+                
+                let boxShape = SCNPhysicsShape(geometry: box, options: nil)
+                let boxBody = SCNPhysicsBody(type: .Dynamic, shape: boxShape)
+                
+                node.physicsBody = boxBody;
+                node.name = "box"
+                self.scnView.scene!.rootNode.addChildNode(node)
+            }
+        }
     }
 }

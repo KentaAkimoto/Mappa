@@ -29,7 +29,7 @@ class CameraViewController: UIViewController {
     override func awakeFromNib() {
         
         // キャプチャーデバイスの初期化
-        var error:NSError? = nil
+        let error:NSError? = nil
         var deviceCamera:AVCaptureDevice? = nil
         for caputureDevice: AnyObject in AVCaptureDevice.devices() {
             // 背面カメラを取得

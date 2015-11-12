@@ -20,38 +20,27 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RfT-ZE-bA7" customClass="AVPlayerView" customModule="MappaCore" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MsF-2V-B78" customClass="SCNView">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="MsF-2V-B78" firstAttribute="leading" secondItem="RfT-ZE-bA7" secondAttribute="leading" id="4Cy-Dh-ihJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="MsF-2V-B78" secondAttribute="trailing" id="GsL-FX-G6c"/>
+                                    <constraint firstItem="MsF-2V-B78" firstAttribute="top" secondItem="RfT-ZE-bA7" secondAttribute="top" id="Vky-EZ-GlL"/>
+                                    <constraint firstAttribute="bottom" secondItem="MsF-2V-B78" secondAttribute="bottom" id="XbG-k6-heo"/>
+                                </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MsF-2V-B78" customClass="SCNView">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DH2-50-8fo">
-                                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
-                                <state key="normal" title="ふ〜"/>
-                                <connections>
-                                    <action selector="tapButton:" destination="BV1-FR-VrT" eventType="touchUpInside" id="IfI-Iw-GYP"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bah-ap-sbO">
-                                <rect key="frame" x="0.0" y="50" width="30" height="30"/>
-                                <state key="normal" title="げー"/>
-                                <connections>
-                                    <action selector="tapGet:" destination="BV1-FR-VrT" eventType="touchUpInside" id="kHX-rV-tiA"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="RfT-ZE-bA7" firstAttribute="leading" secondItem="rPD-nZ-3zu" secondAttribute="leadingMargin" constant="-20" id="7ik-rU-SE7"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="MsF-2V-B78" secondAttribute="trailing" constant="-20" id="G5g-df-MoW"/>
                             <constraint firstItem="eHH-yo-eU5" firstAttribute="top" secondItem="RfT-ZE-bA7" secondAttribute="bottom" id="NsP-sw-E9l"/>
-                            <constraint firstItem="MsF-2V-B78" firstAttribute="leading" secondItem="rPD-nZ-3zu" secondAttribute="leadingMargin" constant="-20" id="g2C-0A-FbM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="RfT-ZE-bA7" secondAttribute="trailing" constant="-20" id="gnM-0B-wuX"/>
-                            <constraint firstItem="MsF-2V-B78" firstAttribute="top" secondItem="rPD-nZ-3zu" secondAttribute="topMargin" id="jbu-Iy-1Kb"/>
                             <constraint firstItem="RfT-ZE-bA7" firstAttribute="top" secondItem="rPD-nZ-3zu" secondAttribute="topMargin" id="njh-xh-Kbp"/>
-                            <constraint firstItem="Bah-ap-sbO" firstAttribute="top" secondItem="DH2-50-8fo" secondAttribute="bottom" constant="20" id="qUW-Ym-Nzw"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="MsF-2V-B78" secondAttribute="bottom" id="yug-IB-CEu"/>
                         </constraints>
                     </view>
                     <connections>

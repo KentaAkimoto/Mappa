@@ -10,7 +10,6 @@ import UIKit
 import QuartzCore
 import SceneKit
 import AVFoundation
-//import CoreMotion
 
 class GameViewController: UIViewController {
     
@@ -24,10 +23,9 @@ class GameViewController: UIViewController {
     var playerBackgroundLayer:CALayer? = nil
     var assets:AVURLAsset? = nil
     var playerItem:AVPlayerItem? = nil
+    var icloudTimer:NSTimer? = nil
     
     var microphoneVolumeLevelMeter:MicrophoneVolumeLevelMeter? = nil
-    
-//    var motionManager:CMMotionManager? = nil
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         
@@ -49,7 +47,6 @@ class GameViewController: UIViewController {
         }
         else if keyPath == "readyForDisplay" {
                         
-//            self.avPlayerView = AVPlayerView(frame: CGRectMake(0,0,100,100))
             self.avPlayerView!.player = self.avPlayer!
             self.view.addSubview(self.avPlayerView!)
             self.view.sendSubviewToBack(self.avPlayerView!)
@@ -70,6 +67,9 @@ class GameViewController: UIViewController {
         
         let displayLink: CADisplayLink = CADisplayLink(target: self, selector: "update:")
         displayLink.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSRunLoopCommonModes)
+        
+        self.icloudTimer = NSTimer.scheduledTimerWithTimeInterval(10.0, target: self, selector: "checkiCloudData", userInfo: nil, repeats: true)
+
     }
     
     override func awakeFromNib() {
@@ -98,32 +98,12 @@ class GameViewController: UIViewController {
         filter.setValue(50, forKey: "inputScale")
         self.playerLayer!.filters = [filter]
         
-        //self.audioController = AudioController()
-        //audioController!.start()
-/*
-        // 加速度センサー
-        self.motionManager = CMMotionManager()
-        if (self.motionManager!.accelerometerAvailable)
-        {
-            // センサーの更新間隔の指定
-            self.motionManager!.accelerometerUpdateInterval = 1 / 10;  // 10Hz
-            
-            // ハンドラを指定
-            let handler:CMAccelerometerHandler = { data,error in
-                NSLog("%f,%f,%f", data!.acceleration.x, data!.acceleration.y, data!.acceleration.z)
-            }
-            
-            // 加速度の取得開始
-            self.motionManager!.startAccelerometerUpdatesToQueue(NSOperationQueue.currentQueue()!, withHandler: handler)
-        }
-*/
     }
     
         
     func start() {
         
         // create a new scene
-//        let scene = SCNScene(named: "art.scnassets/ship.scn")!
         let scene = SCNScene()
         
         // create and add a camera to the scene
@@ -164,59 +144,34 @@ class GameViewController: UIViewController {
         scene.rootNode.addChildNode(floorNode)
 
         // 箱
-        let numBox = 300
-        let camDistance:CGFloat = 55.0
-        // Add box nodes to the scene
-        for _ in 0..<numBox {
-            let node = SCNNode()
-            let rdx:CGFloat = (randomCGFloat() * camDistance - camDistance / 2)
-            let rdy:CGFloat = randomCGFloat() * 300
-            let rdz:CGFloat = randomCGFloat() * camDistance - camDistance / 2
-            node.position = SCNVector3Make(Float(rdx), Float(rdy), Float(rdz))
-            let box = SCNBox(width: randomCGFloat() * 5.0, height: randomCGFloat() * 5.0, length: randomCGFloat() * 5.0, chamferRadius: 0.0)
-            node.geometry = box
+        let delay = 20.0 * Double(NSEC_PER_SEC)
+        let time  = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        dispatch_after(time, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0),{
 
-            /*
-            // Create and configure a material
-            let material = SCNMaterial()
-            material.specular.contents = UIColor.blueColor()
-            material.locksAmbientWithDiffuse = true
-            
-            // Set shaderModifiers properties
-            let snipet = "uniform float Scale = 3.0;\n" +
-                "uniform float Width = 0.5;\n" +
-                "uniform float Blend = 0.0;\n" +
-                "vec2 position = fract(_surface.diffuseTexcoord * Scale);" +
-                "float f1 = clamp(position.y / Blend, 0.0, 1.0);" +
-                "float f2 = clamp((position.y - Width) / Blend, 0.0, 1.0);" +
-                "f1 = f1 * (1.0 - f2);" +
-                "f1 = f1 * f1 * 2.0 * (3. * 2. * f1);" +
-            "_surface.diffuse = mix(vec4(1.0), vec4(0.0), f1);"
-            
-            material.shaderModifiers = [SCNShaderModifierEntryPointSurface: snipet]
-            
-            // Set the material to the 3D object geometry
-            node.geometry?.firstMaterial = material
-            */
-            
-            node.geometry?.firstMaterial?.diffuse.contents = self.imageWithString(self.randomText()) //UIColor.blueColor()
-            
-            let boxShape = SCNPhysicsShape(geometry: box, options: nil)
-            let boxBody = SCNPhysicsBody(type: .Dynamic, shape: boxShape)
-            
-            node.physicsBody = boxBody;
-            node.name = "box"
-            scene.rootNode.addChildNode(node)
-        }
+            let numBox = 300
+            let camDistance:CGFloat = 55.0
+            // Add box nodes to the scene
+            for _ in 0..<numBox {
+                let node = SCNNode()
+                let rdx:CGFloat = (self.randomCGFloat() * camDistance - camDistance / 2)
+                let rdy:CGFloat = self.randomCGFloat() * 300
+                let rdz:CGFloat = self.randomCGFloat() * camDistance - camDistance / 2
+                node.position = SCNVector3Make(Float(rdx), Float(rdy), Float(rdz))
+                let box = SCNBox(width: self.randomCGFloat() * 5.0, height: self.randomCGFloat() * 5.0, length: self.randomCGFloat() * 5.0, chamferRadius: 0.0)
+                node.geometry = box
+                
+                node.geometry?.firstMaterial?.diffuse.contents = self.imageWithString(self.randomText()) //UIColor.blueColor()
+                
+                let boxShape = SCNPhysicsShape(geometry: box, options: nil)
+                let boxBody = SCNPhysicsBody(type: .Dynamic, shape: boxShape)
+                
+                node.physicsBody = boxBody;
+                node.name = "box"
+                scene.rootNode.addChildNode(node)
+            }
+
+        })
         
-        // retrieve the ship node
-//        let ship = scene.rootNode.childNodeWithName("ship", recursively: true)!
-        
-        // animate the 3d object
-//        ship.runAction(SCNAction.repeatActionForever(SCNAction.rotateByX(0, y: 2, z: 0, duration: 1)))
-        
-        // retrieve the SCNView
-//        let scnView = self.view as! SCNView
         
         // set the scene to the view
         scnView.scene = scene
@@ -225,7 +180,7 @@ class GameViewController: UIViewController {
         scnView.allowsCameraControl = false
         
         // show statistics such as fps and timing information
-        scnView.showsStatistics = true
+        //scnView.showsStatistics = true
         
         // configure the view
         scnView.backgroundColor = UIColor.clearColor()
@@ -233,21 +188,6 @@ class GameViewController: UIViewController {
         // add a tap gesture recognizer
         let tapGesture = UITapGestureRecognizer(target: self, action: "handleTap:")
         scnView.addGestureRecognizer(tapGesture)
-        
-        
-        // 壁を生成
-        //self.createManyBoxNode()
-
-        /*
-        // 映像を映す箱
-        let planeMaterial:SCNMaterial = SCNMaterial()
-        planeMaterial.diffuse.contents = UIColor.greenColor() //self.playerBackgroundLayer
-        let boxGeometry:SCNBox = SCNBox(width:10,height:10,length:10,chamferRadius:0)
-        boxGeometry.materials = [planeMaterial]
-        let node:SCNNode = SCNNode()
-        node.geometry = boxGeometry
-        scnView.scene?.rootNode.addChildNode(node)
-        */
         
     }
     
@@ -287,7 +227,6 @@ class GameViewController: UIViewController {
         boxGeometoryNode.physicsBody!.mass        = 0.01
         boxGeometoryNode.physicsBody!.restitution = 0.2
         
-//        let scnView:SCNView = self.view as! SCNView
         scnView.scene!.rootNode.addChildNode(boxGeometoryNode)
     
     }
@@ -301,8 +240,6 @@ class GameViewController: UIViewController {
     
     
     func handleTap(gestureRecognize: UIGestureRecognizer) {
-        // retrieve the SCNView
-        //let scnView = self.view as! SCNView
         
         // check what nodes are tapped
         let p = gestureRecognize.locationInView(scnView)
@@ -332,11 +269,10 @@ class GameViewController: UIViewController {
             material.emission.contents = UIColor.redColor()
             
             // タップしたら一定時間後に削除する
-            let delay = 0.5 * Double(NSEC_PER_SEC)
+            let delay = 0.1 * Double(NSEC_PER_SEC)
             let time  = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
             dispatch_after(time, dispatch_get_main_queue(), {
                 if result.node.geometry is SCNBox && result.node.name == "box" {
-//                    result.node.removeFromParentNode()
 
                     // nodeを移動させる
                     // 移動方向、移動先
@@ -420,11 +356,11 @@ class GameViewController: UIViewController {
         
         let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         
-        var randomString : NSMutableString = NSMutableString(capacity: len)
+        let randomString : NSMutableString = NSMutableString(capacity: len)
         
         for (var i=0; i < len; i++){
-            var length = UInt32 (letters.length)
-            var rand = arc4random_uniform(length)
+            let length = UInt32 (letters.length)
+            let rand = arc4random_uniform(length)
             randomString.appendFormat("%C", letters.characterAtIndex(Int(rand)))
         }
         
@@ -458,7 +394,7 @@ class GameViewController: UIViewController {
 
         if (self.microphoneVolumeLevelMeter != nil) {
             self.microphoneVolumeLevelMeter!.update()
-            print(self.microphoneVolumeLevelMeter!.average())
+            //print(self.microphoneVolumeLevelMeter!.average())
 
             // 息を吹きかけたときにboxを一気に移動させる
             // 0が最大、最小は-160
@@ -494,12 +430,12 @@ class GameViewController: UIViewController {
             for targetNode in self.scnView.scene!.rootNode.childNodes {
                 if targetNode.geometry is SCNBox && targetNode.name == "box" && targetNode.presentationNode.position.x <= -45.0 {
                     targetNode.removeFromParentNode()
-                    NSLog("deleted %f", targetNode.presentationNode.position.x)
+                    //NSLog("deleted %f", targetNode.presentationNode.position.x)
                 }
                 
             }
         }
-/**/
+        
         // 端末向きを取得する
         let orientation:UIDeviceOrientation = UIDevice.currentDevice().orientation
         switch (orientation) {
@@ -519,46 +455,48 @@ class GameViewController: UIViewController {
                 }
                 break
         }
-/**/
+
     }
     
     @IBAction func tapButton(sender: AnyObject) {
-//        self.microphoneVolumeLevelMeter = MicrophoneVolumeLevelMeter()
-//        self.microphoneVolumeLevelMeter!.start()
-        
         let storageManager:CloudKitStorageManager = CloudKitStorageManager()
         storageManager.saveRecord()
         
     }
     
-    @IBAction func tapGet(sender: AnyObject) {
-        let storageManager:CloudKitStorageManager = CloudKitStorageManager()
-        let fetchComments:[Comment] = storageManager.fetchRecord(NSDate())
+    func checkiCloudData() {
         
-        
-        for comment:Comment in fetchComments {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            let storageManager:CloudKitStorageManager = CloudKitStorageManager()
+            let fetchComments:[Comment] = storageManager.fetchRecord(NSDate())
             
-            // 箱
-            let numBox = 300
-            let camDistance:CGFloat = 55.0
-            // Add box nodes to the scene
-            for _ in 0..<numBox {
-                let node = SCNNode()
-                let rdx:CGFloat = (randomCGFloat() * camDistance - camDistance / 2)
-                let rdy:CGFloat = randomCGFloat() * 300
-                let rdz:CGFloat = randomCGFloat() * camDistance - camDistance / 2
-                node.position = SCNVector3Make(Float(rdx), Float(rdy), Float(rdz))
-                let box = SCNBox(width: randomCGFloat() * 5.0, height: randomCGFloat() * 5.0, length: randomCGFloat() * 5.0, chamferRadius: 0.0)
-                node.geometry = box
-                node.geometry?.firstMaterial?.diffuse.contents = self.imageWithString(comment.comment)
+            
+            for comment:Comment in fetchComments {
                 
-                let boxShape = SCNPhysicsShape(geometry: box, options: nil)
-                let boxBody = SCNPhysicsBody(type: .Dynamic, shape: boxShape)
-                
-                node.physicsBody = boxBody;
-                node.name = "box"
-                self.scnView.scene!.rootNode.addChildNode(node)
+                // 箱
+                let numBox = 300
+                let camDistance:CGFloat = 55.0
+                // Add box nodes to the scene
+                for _ in 0..<numBox {
+                    let node = SCNNode()
+                    let rdx:CGFloat = (self.randomCGFloat() * camDistance - camDistance / 2)
+                    let rdy:CGFloat = self.randomCGFloat() * 300
+                    let rdz:CGFloat = self.randomCGFloat() * camDistance - camDistance / 2
+                    node.position = SCNVector3Make(Float(rdx), Float(rdy), Float(rdz))
+                    let box = SCNBox(width: self.randomCGFloat() * 5.0, height: self.randomCGFloat() * 5.0, length: self.randomCGFloat() * 5.0, chamferRadius: 0.0)
+                    node.geometry = box
+                    node.geometry?.firstMaterial?.diffuse.contents = self.imageWithString(comment.comment)
+                    
+                    let boxShape = SCNPhysicsShape(geometry: box, options: nil)
+                    let boxBody = SCNPhysicsBody(type: .Dynamic, shape: boxShape)
+                    
+                    node.physicsBody = boxBody;
+                    node.name = "box"
+                    self.scnView.scene!.rootNode.addChildNode(node)
+                }
             }
-        }
+
+        })
+        
     }
 }
